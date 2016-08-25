@@ -1,0 +1,10 @@
+Format: 1.0
+Type: Application
+FullName: io.murano.apps.alan.MyEther
+Name: My Etherpad
+Description: |
+  This is a test for ether pad
+Author: 'alan.lo@unimelb.edu.au'
+Tags: [HTTP]
+Classes:
+ io.murano.apps.alan.MyEther: MyEther.yaml

@@ -1,0 +1,18 @@
+
+FormatVersion: 2.0.0
+Version: 1.0.0
+Name: Deploy Etherpad
+
+
+Body: |
+  return etherDeploy().stdout
+
+Scripts:
+  etherDeploy:
+    Type: Application
+    Version: 1.0.0
+    EntryPoint: deployEther.sh
+    Files: []
+    Options:
+      captureStdout: true
+      captureStderr: true
