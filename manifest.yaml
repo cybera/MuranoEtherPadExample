@@ -1,10 +1,11 @@
 Format: 1.0
 Type: Application
-FullName: io.murano.apps.alan.MyEther
-Name: My Etherpad
+FullName: io.murano.apps.AlanLoDemo.Etherpad
+Name: Etherpad Demo v20160926
 Description: |
-  This is a test for ether pad
+  https://github.com/AlanCLo/MuranoEtherPadExample
+  An example Murano package for the Nectar cloud (http://nectar.org.au/) that deploys Etherpad 1.6.0 (https://github.com/ether/etherpad-lite/tree/1.6.0)
 Author: 'alan.lo@unimelb.edu.au'
-Tags: [HTTP]
+Tags: [HTTP Collaboration Tool]
 Classes:
- io.murano.apps.alan.MyEther: MyEther.yaml
+ io.murano.apps.AlanLoDemo.Etherpad: Etherpad.yaml

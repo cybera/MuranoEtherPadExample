@@ -1,21 +1,16 @@
 
 Namespaces:
-  =: io.murano.apps.alan
+  =: io.murano.apps.AlanLoDemo
   std: io.murano
   res: io.murano.resources
   sys: io.murano.system
 
 
-Name: MyEther
+Name: Etherpad
 
 Extends: std:Application
 
 Properties:
-
-  enablePHP:
-    Contract: $.bool()
-    Default: false
-
   instance:
     Contract: $.class(res:Instance).notNull()
 
@@ -41,14 +36,10 @@ Methods:
           - $._environment.securityGroupManager.addGroupIngress($securityGroupIngress)
           - $.instance.deploy()
           - $resources: new(sys:Resources)
-          - $template: $resources.yaml('DeployEther.template').bind(dict(enablePHP => $.enablePHP))
-          - $._environment.reporter.report($this, 'Instance is created. Deploying Ether')
+          - $template: $resources.yaml('Deploy.template').bind()
+          - $._environment.reporter.report($this, 'Instance is created. Deploying Etherpad')
           - $.instance.agent.call($template, $resources)
-          - $._environment.reporter.report($this, 'Ether is installed.')
-          - If: $.instance.assignFloatingIp
-            Then:
-              - $host: $.instance.floatingIpAddress
-            Else:
-              - $host: $.instance.ipAddresses[0]
+          - $._environment.reporter.report($this, 'Etherpad is installed.')
+          - $host: $.instance.ipAddresses[0]
           - $._environment.reporter.report($this, format('Etherpad is available at http://{0}', $host))
           - $.setAttr(deployed, true)
