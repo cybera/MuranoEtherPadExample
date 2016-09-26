@@ -1,6 +1,5 @@
-- Make file to build
-- Users
-- Murano coders
+An example Murano package for the Nectar Cloud.
 
+*Building the Murano package*
+On any standard linux-like environment, use make to build the resulting zip file to upload to Nectar cloud
 
-An example Murano package for the Nectar cloud (http://nectar.org.au/) that deploys Etherpad 1.6.0 (https://github.com/ether/etherpad-lite/tree/1.6.0)
