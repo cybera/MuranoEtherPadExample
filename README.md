@@ -1,8 +1,8 @@
 # Murano Etherpad Example.
 
-This is a Murano package that deploys Etherpad designed for the Nectar cloud. It is intended to be a useful application for general purposes and also provide a reference implementation from The University of Melbourne's Nectar community.
+This is a Murano package that deploys Etherpad designed for the Nectar cloud. Etherpad is a collaborative notepad editor that works on any modern web browser. It is intended to be a useful application for general purposes and also provide a reference implementation from The University of Melbourne's Nectar community.
 
-**This setup is not designed to be a long-standing Etherpad server**. Start a new instance of Etherpad here and use it for your workshop/conference/etc for the next few days. Once you are done you should shutdown the instance from Nectar dashboard.
+**This setup is not designed to be a long-standing Etherpad server**. Start a new instance of Etherpad using Murano and use it for your workshop/conference/etc for the next few days. Once you are done you should shutdown the instance from Nectar dashboard.
 
 Links
 * https://wiki.openstack.org/wiki/Murano
