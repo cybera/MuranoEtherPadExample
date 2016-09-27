@@ -13,6 +13,8 @@ Links
 
 Murano packages are shipped as zip files. I've used [Make](https://www.gnu.org/software/make/) here to construct it. Use make on any GNU system to generate DemoEtherpad.zip
 ```
+$> git clone https://github.com/AlanCLo/MuranoEtherPadExample.git
+$> cd MuranoEtherPadExample
 $> make
 
  *** Building murano zip package
