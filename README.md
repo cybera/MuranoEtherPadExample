@@ -37,6 +37,8 @@ Dependencies
 
 Check the Murano's quickstart guide here: http://docs.openstack.org/developer/murano/enduser-guide/quickstart.html
 
+Once the deployment is complete, point your web browser to the IP address of the new server displayed on the Nectar Dashboard.
+
 ## Setup
 
 This package performs a simple deployment of Etherpad 1.6.0 specifically on a single Ubuntu server with the following configuration:
