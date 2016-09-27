@@ -36,7 +36,7 @@ Methods:
           - $._environment.securityGroupManager.addGroupIngress($securityGroupIngress)
           - $.instance.deploy()
           - $resources: new(sys:Resources)
-          - $template: $resources.yaml('Deploy.template').bind()
+          - $template: $resources.yaml('Deploy.template')
           - $._environment.reporter.report($this, 'Instance is created. Deploying Etherpad')
           - $.instance.agent.call($template, $resources)
           - $._environment.reporter.report($this, 'Etherpad is installed.')
