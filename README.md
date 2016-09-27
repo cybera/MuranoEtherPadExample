@@ -2,10 +2,12 @@
 
 This is a Murano package that deploys Etherpad designed for the Nectar cloud. It is intended to be a useful application for general purposes and also provide a reference implementation from The University of Melbourne's Nectar community.
 
+**This setup is not designed to be a long-standing Etherpad server**. Start a new instance of Etherpad here and use it for your workshop/conference/etc for the next few days. Once you are done you should shutdown the instance from Nectar dashboard.
+
 Links
-* [https://wiki.openstack.org/wiki/Murano]
-* [http://nectar.org.au]
-* [http://etherpad.org/]
+* https://wiki.openstack.org/wiki/Murano
+* http://nectar.org.au
+* http://etherpad.org/
 
 ## Building the Murano package
 
@@ -33,6 +35,21 @@ Dependencies
 
 Check the Murano's quickstart guide here: http://docs.openstack.org/developer/murano/enduser-guide/quickstart.html
 
-## Contents of the package
+## Setup
 
-..
+This package performs a simple deployment of Etherpad 1.6.0 specifically on a single Ubuntu server with the following configuration:
+* Etherpad runs directly on port 80 (http)
+* Etherpad is process controlled by supervisord to automatically restart
+* Data is stored locally on "dirtydb" mode
+
+This is not designed to be a long-standing deployment.
+
+## Main contents of the package
+
+1. Resources/scripts/deploy.sh
+ * Installs and configures the application after VM is instantiated
+2. UI/ui.yaml
+ * Defines all the variables & labels in the Dashboard wizard to setup the application
+3. Classes/Etherpad.yaml
+ * Backend Murano script that orchestrates the deployment process based on parameters provided
+
