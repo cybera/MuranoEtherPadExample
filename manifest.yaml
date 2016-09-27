@@ -4,7 +4,8 @@ FullName: io.murano.apps.AlanLoDemo.Etherpad
 Name: Etherpad Demo v20160926
 Description: |
   https://github.com/AlanCLo/MuranoEtherPadExample
-  An example Murano package for the Nectar cloud (http://nectar.org.au/) that deploys Etherpad 1.6.0 (https://github.com/ether/etherpad-lite/tree/1.6.0)
+  
+  A collaborative notepad tool for the browser.
 Author: 'alan.lo@unimelb.edu.au'
 Tags: [HTTP Collaboration Tool]
 Classes:
