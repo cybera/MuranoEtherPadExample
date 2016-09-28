@@ -43,7 +43,7 @@ Once the deployment is complete, point your web browser to the IP address of the
 
 This package performs a simple deployment of Etherpad 1.6.0 specifically on a single Ubuntu server with the following configuration:
 * Server only permits http (80), https (443), and ssh (20) connections
-* Etherpad runs on port 9001 as **ubuntu** user
+* Etherpad runs on port 9001 as **etherpad** user
 * Nginx will pass traffic from port 80 to Etherpad on 9001
 * Etherpad is process controlled by supervisord to automatically restart
 * Data is stored locally on "dirtydb" mode

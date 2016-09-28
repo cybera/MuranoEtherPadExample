@@ -6,16 +6,22 @@ sudo apt-get update
 #sudo apt-get upgrade -y
 sudo apt-get install -y gzip git curl python libssl-dev pkg-config build-essential nodejs-legacy npm supervisor nginx
 
+## Make a user to run etherpad with
+adduser --disabled-password --disabled-login --gecos "" etherpad
+
 ## Fetch software, configure and install
 cd /opt
 git clone --branch 1.6.0 https://github.com/ether/etherpad-lite.git etherpad-lite
+chown -R etherpad:etherpad etherpad-lite
 cd etherpad-lite
 bin/installDeps.sh > log.txt 2> error.txt
 
 ## Setup supervisord to keep the service running
 cat << EOT >> /etc/supervisor/conf.d/etherpad.conf
 [program:etherpad]
-command=/opt/etherpad-lite/bin/run.sh --root
+command=node /opt/etherpad-lite/node_modules/ep_etherpad-lite/node/server.js
+directory=/opt/etherpad-lite
+user=etherpad
 autostart=true
 autorestart=true
 stderr_logfile=/var/log/etherpad.err.log
