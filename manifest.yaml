@@ -1,12 +1,13 @@
-Format: 1.0
+Format: 1.3
 Type: Application
-FullName: io.murano.apps.AlanLoDemo.Etherpad
-Name: Etherpad Demo v20160926
+FullName: ca.cybera.Etherpad
+Name: Etherpad
 Description: |
-  https://github.com/AlanCLo/MuranoEtherPadExample
-  
+  https://github.com/cybera/murano-app-etherpad
+
   A collaborative notepad tool for the browser.
-Author: 'alan.lo@unimelb.edu.au'
-Tags: [HTTP Collaboration Tool]
+Author: 'Cybera Inc, alan.lo@unimelb.edu.au'
+Tags:
+  - Collaboration
 Classes:
- io.murano.apps.AlanLoDemo.Etherpad: Etherpad.yaml
+  ca.cybera.Etherpad: Etherpad.yaml

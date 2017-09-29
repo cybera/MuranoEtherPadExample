@@ -6,10 +6,17 @@ Templates:
         type: io.murano.resources.ExistingNeutronNetwork
       internalNetworkName: $.instanceConfiguration.network[0]
       internalSubnetworkName: $.instanceConfiguration.network[1]
+  customVolumeAttachment:
+    '/dev/vdd':
+      ?:
+        type: io.murano.resources.ExistingCinderVolume
+      openstackId: $.instanceConfiguration.volume
 
 Application:
   ?:
-    type: io.murano.apps.AlanLoDemo.Etherpad
+    type: ca.cybera.Etherpad
+  name: $.appConfiguration.name
+  password: $.appConfiguration.password
   instance:
     ?:
       type: io.murano.resources.LinuxMuranoInstance
@@ -18,51 +25,62 @@ Application:
     image: $.instanceConfiguration.osImage
     keyname: $.instanceConfiguration.keyPair
     availabilityZone: $.instanceConfiguration.availabilityZone
+    assignFloatingIp: $.instanceConfiguration.assignFloatingIP
     networks:
       useEnvironmentNetwork: $.instanceConfiguration.network[0]=null
       useFlatNetwork: false
       customNetworks: switch($.instanceConfiguration.network[0], $=null=>list(), $!=null=>$customJoinNet)
+    volumes: switch($.instanceConfiguration.volume, $=''=>null, $!=null=>$customVolumeAttachment)
 
 Forms:
   - instanceConfiguration:
       fields:
-        - name: license
-          type: string
-          description: Apache License, Version 2.0
-          hidden: true
-          required: false
         - name: flavor
           type: flavor
           label: Instance flavor
           requirements:
             min_disk: 5
           description: >-
-            Known to work with m1.medium
+            Select a flavor.
           required: true
         - name: osImage
           type: image
           imageType: linux
           label: Instance image
           description: >-
-            Known to work with NeCTAR Ubuntu 16.04 LTS (Xenial) amd64 (pre-install murano-agent)
+            Select an image.
         - name: keyPair
           type: keypair
           label: Key Pair
           description: >-
-            Select the Key Pair to control access to instances. You can ssh into instances using this KeyPair after deployment
+            Select the Key Pair to control access to instances. You can ssh into instances
+            using this KeyPair after deployment.
           required: false
         - name: availabilityZone
           type: azone
           label: Availability zone
           description: Pick which zone you would like to run from
           required: true
+        - name: volume
+          type: volume
+          label: Volume
+          required: false
+          description: Select a volume to use.
         - name: network
           type: network
           label: Network
           description: >-
-            Select a network to join. 'Auto' corresponds to a default environment network.
-          required: false
+            Select a network to join.
+          required: true
           murano_networks: translate
+          allow_auto: false
+        - name: assignFloatingIP
+          type: boolean
+          label: Assign Floating IP
+          description: >-
+            Select to assign a floating IP automatically.
+          initial: false
+          required: false
         - name: unitNamingPattern
           type: string
           label: Instance Naming Pattern
@@ -75,4 +93,23 @@ Forms:
           description: >-
             Specify a string, that will be used in instance hostname.
             Just A-Z, a-z, 0-9, dash and underline are allowed.
-
+  - appConfiguration:
+      fields:
+        - name: title
+          type: string
+          required: false
+          hidden: true
+          description: >-
+            Application Configuration
+        - name: name
+          type: string
+          label: Name
+          description: Etherpad Name
+          initial: Etherpad
+        - name: password
+          type: password
+          label: Admin Password
+          description: >-
+            Provide a password for the admin user.
+          helpText: >-
+            Password must be between 5 and 100 characters long.

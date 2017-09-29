@@ -6,7 +6,6 @@ This Murano package designed for the Nectar cloud deploys Etherpad. Etherpad is 
 
 Links
 * https://wiki.openstack.org/wiki/Murano
-* http://nectar.org.au
 * http://etherpad.org/
 
 ## Building the Murano package
@@ -32,7 +31,7 @@ zip -r DemoEtherpad.zip manifest.yaml logo.png Classes/Etherpad.yaml Resources/D
 ## Using the Murano package
 
 Dependencies
-* NeCTAR Ubuntu 16.04 LTS (Xenial) amd64 (pre-install murano-agent)
+* Ubuntu 16.04
 * Minimum Root Disk size: 5GB
 
 Check the Murano's quickstart guide here: http://docs.openstack.org/developer/murano/enduser-guide/quickstart.html
@@ -42,13 +41,12 @@ Once the deployment is complete, point your web browser to the IP address of the
 ## Setup
 
 This package performs a simple deployment of Etherpad 1.6.0 specifically on a single Ubuntu server with the following configuration:
-* Server only permits http (80), https (443), and ssh (20) connections
+* Server only permits http (80), https (443), and ssh (22) connections
 * Etherpad runs on port 9001 as **etherpad** user
 * Nginx will pass traffic from port 80 to Etherpad on 9001
 * Etherpad is process controlled by supervisord to automatically restart
-* Data is stored locally on "dirtydb" mode
+* Data is stored in MySQL. Data will be stored on a volume if requested.
 
-This is not designed to be a long-standing deployment.
 
 ## Main contents of the package
 

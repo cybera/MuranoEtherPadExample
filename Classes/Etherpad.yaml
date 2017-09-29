@@ -1,18 +1,20 @@
-
 Namespaces:
-  =: io.murano.apps.AlanLoDemo
+  =: ca.cybera
   std: io.murano
   res: io.murano.resources
   sys: io.murano.system
-
+  conf: io.murano.configuration
 
 Name: Etherpad
-
 Extends: std:Application
 
 Properties:
+  name:
+    Contract: $.string().notNull()
   instance:
-    Contract: $.class(res:Instance).notNull()
+    Contract: $.class(res:LinuxMuranoInstance).notNull()
+  password:
+    Contract: $.string().notNull()
 
 Methods:
   initialize:
@@ -23,7 +25,7 @@ Methods:
     Body:
       - If: not $.getAttr(deployed, false)
         Then:
-          - $._environment.reporter.report($this, 'Creating VM for Etherpad Server.')
+          - $._environment.reporter.report($this, 'Creating security group for Etherpad Server.')
           - $securityGroupIngress:
             - ToPort: 80
               FromPort: 80
@@ -33,13 +35,39 @@ Methods:
               FromPort: 443
               IpProtocol: tcp
               External: true
+            - ToPort: 80
+              FromPort: 80
+              IpProtocol: tcp
+              External: true
+              Ethertype: IPv6
+            - ToPort: 443
+              FromPort: 443
+              IpProtocol: tcp
+              External: true
+              Ethertype: IPv6
           - $._environment.securityGroupManager.addGroupIngress($securityGroupIngress)
+
+          # Launch the instance
+          - $._environment.reporter.report($this, 'Creating instance for Etherpad Server.')
           - $.instance.deploy()
-          - $resources: new(sys:Resources)
-          - $template: $resources.yaml('Deploy.template')
+
+          # Deploy Etherpad
           - $._environment.reporter.report($this, 'Instance is created. Deploying Etherpad')
-          - $.instance.agent.call($template, $resources)
+          - $replacements:
+              "%NAME%": $.name
+              "%PASSWORD%": $.password
+          - $file: sys:Resources.string('deployEtherpad.sh').replace($replacements)
+          - conf:Linux.runCommand($.instance.agent, $file)
           - $._environment.reporter.report($this, 'Etherpad is installed.')
-          - $host: $.instance.ipAddresses[0]
-          - $._environment.reporter.report($this, format('Etherpad is available at http://{0}', $host))
+
+          - If: $.instance.assignFloatingIp
+            Then:
+              - $address: format('http://{0}', $.instance.floatingIpAddress)
+            Else:
+              - $address: $.instance.ipAddresses.selectMany(
+                  switch(
+                    $.matches("[a-f]+") => format('[{0}]', $),
+                    true => $
+                  )).select(format('http://{0}', $)).join(', ')
+          - $._environment.reporter.report($this, 'Etherpad is available at {0}'.format($address))
           - $.setAttr(deployed, true)
